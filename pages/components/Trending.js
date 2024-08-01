@@ -6,8 +6,7 @@ import {
 
 export default function Trending() {
   return (
-    <div className="lg:flex-col">
-      Trending
+    <div className="hidden lg:flex flex-col ml-7 mt-4">
       <div
         className="flex space-x-3 bg-white bg-opacity-10
             w-[300px] h-[44px] p-3 rounded-3xl"
