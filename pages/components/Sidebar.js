@@ -12,7 +12,7 @@ import Image from "next/image";
 
 export default function Sidebar() {
   return (
-    <div className="h-full hidden sm:flex flex-col fixed xl:ml-24">
+    <div className="h-full hidden sm:hidden flex-col fixed xl:ml-24">
       <nav className="h-full xl:space-y-1.5 relative">
         <div className="flex justify-center xl:justify-start items-center py-3 xl:p-3 ">
           <Image
