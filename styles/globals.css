@@ -1,0 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.hoverAnimation {
+  @apply hover:cursor-pointer hover:bg-white hover:bg-opacity-10 xl:p-3
+}
