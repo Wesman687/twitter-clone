@@ -3,9 +3,12 @@
 @tailwind utilities;
 
 .hoverAnimation {
-  @apply hover:cursor-pointer hover:bg-white hover:bg-opacity-10 xl:p-3
+  @apply hover:cursor-pointer hover:text-white xl:p-3
 }
 
 .iconsAnimation {
-  @apply hover:bg-opacity-10 hover:bg-[#1d9bf0] rounded-full w-9 h-9 flex items-center justify-center cursor-pointer
+  @apply hover:bg-opacity-10  hover:bg-[#1d9bf0] rounded-full w-9 h-9 flex items-center justify-center cursor-pointer
+}
+body {
+  background-color: black;
 }
