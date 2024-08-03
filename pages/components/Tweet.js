@@ -1,4 +1,4 @@
-import { openCommentModal } from "@/redux/modalSlice";
+import { openCommentModal, setCommentTweet } from "@/redux/modalSlice";
 import {
   ChartBarIcon,
   ChatIcon,
@@ -8,9 +8,8 @@ import {
 import Moment from "react-moment";
 import { useDispatch } from "react-redux";
 
-
-export default function Tweet({ data }) {
-    const dispatch = useDispatch()
+export default function Tweet({ data, id }) {
+  const dispatch = useDispatch();
   return (
     <div className="border-b border-gray-700">
       <TweetHeader
@@ -21,8 +20,21 @@ export default function Tweet({ data }) {
         photoUrl={data?.photoUrl}
       />
       <div className="p-3 ml-16 text-gray-500 flex space-x-14">
-        <div onClick={()=> dispatch(openCommentModal())}>
-        <ChatIcon className="w-5 cursor-pointer hover:text-green-400" />
+        <div
+          onClick={() => {
+            dispatch(
+              setCommentTweet({
+                id: id,
+                tweet: data?.tweet,
+                photoUrl: data?.photoUrl,
+                name: data?.name,
+                username: data?.username,
+              })
+            );
+            dispatch(openCommentModal());
+          }}
+        >
+          <ChatIcon className="w-5 cursor-pointer hover:text-green-400" />
         </div>
         <HeartIcon className="w-5 cursor-pointer hover:text-pink-500" />
         <ChartBarIcon className="w-5 cursor-not-allowed" />
@@ -32,13 +44,10 @@ export default function Tweet({ data }) {
   );
 }
 
-export function TweetHeader({username, name, text, timestamp, photoUrl}) {
+export function TweetHeader({ username, name, text, timestamp, photoUrl }) {
   return (
     <div className="flex space-x-3 p-3">
-      <img
-        className="w-11 h-11 rounded-full object-cover"
-        src={photoUrl}
-      ></img>
+      <img className="w-11 h-11 rounded-full object-cover" src={photoUrl}></img>
 
       <div>
         <div className="text-gray-500 flex items-center space-x-2 mb-1">
