@@ -5,13 +5,17 @@ import {
   HeartIcon,
   UploadIcon,
 } from "@heroicons/react/outline";
+import { useRouter } from "next/router";
 import Moment from "react-moment";
 import { useDispatch } from "react-redux";
 
 export default function Tweet({ data, id }) {
   const dispatch = useDispatch();
+  const router = useRouter()
   return (
-    <div className="border-b border-gray-700">
+    <div 
+    onClick={() => router.push("/" + id)}
+    className="border-b border-gray-700 cursor-pointer">
       <TweetHeader
         username={data?.username}
         name={data?.name}
@@ -21,7 +25,8 @@ export default function Tweet({ data, id }) {
       />
       <div className="p-3 ml-16 text-gray-500 flex space-x-14">
         <div
-          onClick={() => {
+          onClick={(e) => {
+            e.stopPropagation()
             dispatch(
               setCommentTweet({
                 id: id,
