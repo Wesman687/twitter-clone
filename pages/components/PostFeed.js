@@ -3,7 +3,6 @@ import Tweet from "./Tweet";
 import TweetInput from "./TweetInput";
 import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
 import { db } from "@/firebase";
-import Link from "next/link";
 
 export default function PostFeed() {
     const [tweets, setTweets] = useState([])
