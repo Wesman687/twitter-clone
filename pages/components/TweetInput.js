@@ -1,12 +1,28 @@
-import { db } from "@/firebase";
-import { CalendarIcon, ChartBarIcon, EmojiHappyIcon, LocationMarkerIcon, PhotographIcon } from "@heroicons/react/outline";
+import { db, storage } from "@/firebase";
+import { CalendarIcon, ChartBarIcon, EmojiHappyIcon, LocationMarkerIcon, PhotographIcon, XIcon } from "@heroicons/react/outline";
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
-import { useState } from "react";
+import { ref, uploadString } from "firebase/storage";
+import { useRef, useState } from "react";
 import { useSelector } from "react-redux";
 
 export default function TweetInput() {
   const [text, setText] = useState()
+  const [image, setImage] = useState(null)
   const user = useSelector(state => state.user)
+  const filePickerRef = useRef(null)
+
+
+  function addImagetoTweet(e){
+    const reader = new FileReader()
+    if (e.target.files[0]) {
+      reader.readAsDataURL(e.target.files[0])
+    }
+
+    reader.addEventListener("load", e => {
+      setImage(e.target.result)
+    })
+  }
+
   async function sendTweet() {
     const docRef = await addDoc(collection(db, "posts"), {
       username: user.username,
@@ -17,6 +33,10 @@ export default function TweetInput() {
       likes: [],
       tweet: text
     })
+    if (image) {
+      const imageRef = ref(storage, `tweetImages/${docRef.id}`)
+      const uploadImage = await uploadString(imageRef, image, )
+    }
     setText("")
   }
   return (
@@ -33,14 +53,34 @@ export default function TweetInput() {
         onChange={e => setText(e.target.value)}
         value={text}
         ></textarea>
+        {image && (
+          <div className="mb-4 relative">
+            <div 
+            onClick={()=> setImage(null)}
+            className="absolute top-1 left-1 bg-[#272c26]
+              w-8 h-8 flex justify-center items-center rounded-full cursor-pointer
+              hover:bg-white hover:bg-opacity-10">
+              <XIcon className="h-5" />
+            </div>
+            <img 
+            className="rounded-2xl max-h-80 object-container"
+            src={image} />
+          </div>
+        )}
+
         <div
           className="flex justify-between border-t
         border-gray-700 pt-4"
         >
           <div className="flex space-x-0">
-            <div className="iconsAnimation">
+            <div 
+            onClick={() => filePickerRef.current.click()}
+            className="iconsAnimation">
               <PhotographIcon className="h-[22px] text-[#1d9bf0]" />
             </div>
+            <input 
+            onChange={addImagetoTweet}
+            ref={filePickerRef} className="hidden" type='file' />
             <div className="iconsAnimation">
               <ChartBarIcon className="h-[22px] text-[#1d9bf0]" />
             </div>
@@ -56,7 +96,7 @@ export default function TweetInput() {
           </div>
           <button 
           onClick={sendTweet} 
-          disabled={!text} 
+          disabled={!text && !image} 
           className="bg-[#1d9bf0] rounded-full px-4 py-1.5 disabled:opacity-50 "
           >Tweet</button>
         </div>
