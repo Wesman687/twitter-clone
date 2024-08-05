@@ -12,6 +12,7 @@ export default function TweetInput() {
   const user = useSelector(state => state.user)
   const filePickerRef = useRef(null)
   const dispatch = useDispatch()
+  const [loading, setLoading] = useState()
 
 
   function addImagetoTweet(e){
@@ -26,7 +27,7 @@ export default function TweetInput() {
   }
 
   async function sendTweet() {
-    console.log(user)
+    setLoading(true)
     if (!user.username){
       dispatch(openLoginModal())
       }
@@ -49,6 +50,7 @@ export default function TweetInput() {
     }
     setText("")
     setImage(null)
+    setLoading(false)
   }
   return (
     <div className="flex space-x-3 p-3 border-b border-gray-700">
@@ -56,7 +58,7 @@ export default function TweetInput() {
         className="w-11 h-11 rounded-full object-cover"
         src={user.photoUrl || "/assets/twitter-logo.png"}
       ></img>
-      <div className="w-full">
+      {loading ? <h1 className="text-2xl text-gray-500">Uploading Post...</h1>  : <div className="w-full">
         <textarea
           placeholder="What's on your mind?"
           className="bg-transparent resize-none outline-none
@@ -111,7 +113,7 @@ export default function TweetInput() {
           className="bg-[#1d9bf0] rounded-full px-4 py-1.5 disabled:opacity-50 "
           >Tweet</button>
         </div>
-      </div>
+      </div>}
     </div>
   );
 }

@@ -61,6 +61,7 @@ useEffect(() => {
         timestamp={data.timestamp?.toDate()}
         text={data?.tweet}
         photoUrl={data?.photoUrl}
+        image={data?.image}
       />
       <div className="p-3 ml-16 text-gray-500 flex space-x-14">
         <div
@@ -104,7 +105,7 @@ useEffect(() => {
   );
 }
 
-export function TweetHeader({ username, name, text, timestamp, photoUrl }) {
+export function TweetHeader({ username, name, text, timestamp, photoUrl, image }) {
   return (
     <div className="flex space-x-3 p-3">
       <img className="w-11 h-11 rounded-full object-cover" src={photoUrl}></img>
@@ -117,6 +118,9 @@ export function TweetHeader({ username, name, text, timestamp, photoUrl }) {
           <Moment fromNow>{timestamp}</Moment>
         </div>
         <span>{text}</span>
+        {image && <img 
+        className="object-cover rounded-md mt-3 max-h-80 border-gray-700"
+        src={image} />}
       </div>
     </div>
   );
