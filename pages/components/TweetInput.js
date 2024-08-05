@@ -1,15 +1,17 @@
 import { db, storage } from "@/firebase";
+import { openLoginModal } from "@/redux/modalSlice";
 import { CalendarIcon, ChartBarIcon, EmojiHappyIcon, LocationMarkerIcon, PhotographIcon, XIcon } from "@heroicons/react/outline";
-import { addDoc, collection, serverTimestamp } from "firebase/firestore";
-import { ref, uploadString } from "firebase/storage";
+import { addDoc, collection, doc, serverTimestamp, updateDoc } from "firebase/firestore";
+import { getDownloadURL, ref, uploadString } from "firebase/storage";
 import { useRef, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function TweetInput() {
   const [text, setText] = useState()
   const [image, setImage] = useState(null)
   const user = useSelector(state => state.user)
   const filePickerRef = useRef(null)
+  const dispatch = useDispatch()
 
 
   function addImagetoTweet(e){
@@ -24,6 +26,10 @@ export default function TweetInput() {
   }
 
   async function sendTweet() {
+    console.log(user)
+    if (!user.username){
+      dispatch(openLoginModal())
+      }
     const docRef = await addDoc(collection(db, "posts"), {
       username: user.username,
       name: user.name,
@@ -35,9 +41,14 @@ export default function TweetInput() {
     })
     if (image) {
       const imageRef = ref(storage, `tweetImages/${docRef.id}`)
-      const uploadImage = await uploadString(imageRef, image, )
+      const uploadImage = await uploadString(imageRef, image, "data_url")
+      const downloadURL = await getDownloadURL(imageRef)
+      await updateDoc(doc(db, "posts", docRef.id), {
+        image: downloadURL
+      })
     }
     setText("")
+    setImage(null)
   }
   return (
     <div className="flex space-x-3 p-3 border-b border-gray-700">
