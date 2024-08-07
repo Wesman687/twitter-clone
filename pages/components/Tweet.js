@@ -141,7 +141,7 @@ export function TweetHeader({
           <h1 className="text-white font-bold">{name}</h1>
           <span>@{username}</span>
           <div className="w-1 h-1 bg-gray-700 rounded-full"></div>
-          <Moment fromNow>{timestamp}</Moment>
+          {timestamp && <Moment fromNow>{timestamp}</Moment>}
         </div>
         <span>{text}</span>
         {image && (
