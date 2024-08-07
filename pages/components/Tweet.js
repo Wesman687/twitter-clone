@@ -69,7 +69,7 @@ export default function Tweet({ data, id }) {
       <TweetHeader
         username={data?.username}
         name={data?.name}
-        timestamp={data.timestamp?.toDate()}
+        timestamp={data?.timestamp.toDate()}
         text={data?.tweet}
         photoUrl={data?.photoUrl}
         image={data?.image}

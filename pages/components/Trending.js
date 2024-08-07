@@ -24,20 +24,20 @@ export default function Trending() {
         <div className="p-3 relative">
           <DotsHorizontalIcon className="w-5 text-gray-600 absolute right-4" />
           <p className="text-xs text-gray-500">Trending in US</p>
-          <h1 className="text-[15px] font-bold">China</h1>
+          <h1 className="text-[15px] font-bold">US</h1>
           <p className="text-cs text-gray-500">340k Tweets</p>
         </div>
         <div className="p-3 relative">
           <DotsHorizontalIcon className="w-5 text-gray-600 absolute right-4" />
-          <p className="text-xs text-gray-500">Trending in US</p>
+          <p className="text-xs text-gray-500">Trending in China</p>
           <h1 className="text-[15px] font-bold">China</h1>
-          <p className="text-cs text-gray-500">340k Tweets</p>
+          <p className="text-cs text-gray-500">140k Tweets</p>
         </div>
         <div className="p-3 relative">
           <DotsHorizontalIcon className="w-5 text-gray-600 absolute right-4" />
-          <p className="text-xs text-gray-500">Trending in US</p>
-          <h1 className="text-[15px] font-bold">China</h1>
-          <p className="text-cs text-gray-500">340k Tweets</p>
+          <p className="text-xs text-gray-500">Trending in AU</p>
+          <h1 className="text-[15px] font-bold">Australia</h1>
+          <p className="text-cs text-gray-500">280k Tweets</p>
         </div>
         <div className="p-3 relative">
           <DotsHorizontalIcon className="w-5 text-gray-600 absolute right-4" />
